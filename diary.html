@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirvana — My Diary</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e0f7ff;
+  --card:#ffffffcc;
+  --accent:#2563eb;
+  --accent-light:#60a5fa;
+  --danger:#dc2626;
+  --muted:#6b7280;
+  --success:#10b981;
+  --shadow:0 8px 24px rgba(2,6,23,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
+body{background:linear-gradient(135deg,#c0f0ff,#e0f7ff);color:#0f172a;min-height:100vh;}
+header{
+  background:linear-gradient(90deg,var(--accent),var(--accent-light));
+  color:white;
+  padding:16px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+header nav a{
+  color:white;
+  text-decoration:none;
+  margin:0 10px;
+  font-weight:500;
+  transition:all .2s;
+}
+header nav a:hover{text-decoration:underline;transform:scale(1.05);}
+.wrap{
+  max-width:900px;
+  margin:24px auto;
+  padding:20px;
+  background:var(--card);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+  transition:all .3s;
+}
+.wrap:hover{box-shadow:0 12px 30px rgba(2,6,23,0.15);}
+h1{margin-bottom:12px;font-size:24px;color:var(--accent);}
+textarea{
+  width:100%;
+  height:150px;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  resize:vertical;
+  font-size:15px;
+  outline:none;
+  transition:border .2s,box-shadow .2s;
+}
+textarea:focus{border-color:var(--accent);box-shadow:0 0 10px rgba(37,99,235,0.2);}
+button{
+  cursor:pointer;
+  border:0;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:600;
+  transition:all .2s;
+}
+button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.08);}
+button.save{background:var(--accent);color:white;}
+button.clear{background:#f1f5f9;color:#0f172a;border:1px solid #d1d5db;}
+.entries{margin-top:24px;display:flex;flex-direction:column;gap:14px}
+.entry{
+  background:#ffffffcc;
+  border-radius:14px;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  transition:all .3s;
+}
+.entry:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+.entry .body{flex:1 1 70%}
+.entry h4{margin-bottom:6px;font-size:14px;color:var(--accent);}
+.entry p{white-space:pre-wrap;color:#111827;}
+.entry .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.entry button.edit{background:#f59e0b;color:white;}
+.entry button.delete{background:var(--danger);color:white;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+.count{font-weight:700;color:var(--accent);}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.5);backdrop-filter:blur(2px);}
+.modal.open{display:flex;animation:fadeIn 0.3s;}
+.modal-card{
+  width:100%;
+  max-width:600px;
+  background:var(--card);
+  padding:16px;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  animation:slideUp 0.3s;
+}
+.modal textarea{height:160px;border:1px solid #d1d5db;padding:12px;border-radius:10px;resize:vertical;}
+@media(max-width:760px){.topbar{flex-direction:column;align-items:flex-start;gap:8px;}}
+@keyframes fadeIn{from{opacity:0} to{opacity:1;}}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Nirvana — My Diary</h1>
+  <nav>
+    <a href="dashboard.html">🏠 Dashboard</a>|
+    <a href="chatbot.html">💬 Chatbot</a>|
+    <a href="contact.html">🧠 Self Assessment</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <div class="topbar">
+    <div>Entries: <span id="entryCount" class="count">0</span></div>
+  </div>
+
+  <textarea id="diaryEntry" placeholder="Write about your day, feelings, wins, worries..."></textarea>
+  <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+    <button class="save" id="saveBtn">Save Entry</button>
+    <button class="clear" id="saveDraftBtn">Save Draft</button>
+    <button class="clear" id="loadDraftBtn">Load Draft</button>
+    <button class="clear" id="clearAllBtn">Clear All</button>
+    <button class="save" id="exportBtn">Export</button>
+  </div>
+
+  <section class="entries" id="entriesList"></section>
+</div>
+
+<!-- Edit modal -->
+<div class="modal" id="editModal">
+  <div class="modal-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <strong>Edit Entry</strong>
+      <button id="closeModalBtn" class="clear">Close</button>
+    </div>
+    <textarea id="modalTextarea"></textarea>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button id="modalSaveBtn" class="save">Save</button>
+      <button id="modalCancelBtn" class="clear">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+const STORAGE_KEY='nirvana_diary_entries_v2',DRAFT_KEY='nirvana_diary_draft_v2';
+const entryCountEl=document.getElementById('entryCount'),entriesList=document.getElementById('entriesList'),diaryEntry=document.getElementById('diaryEntry');
+const saveBtn=document.getElementById('saveBtn'),saveDraftBtn=document.getElementById('saveDraftBtn'),loadDraftBtn=document.getElementById('loadDraftBtn');
+const clearAllBtn=document.getElementById('clearAllBtn'),exportBtn=document.getElementById('exportBtn');
+const editModal=document.getElementById('editModal'),modalTextarea=document.getElementById('modalTextarea');
+const modalSaveBtn=document.getElementById('modalSaveBtn'),modalCancelBtn=document.getElementById('modalCancelBtn');
+const closeModalBtn=document.getElementById('closeModalBtn');
+let entries=[],editIndex=null;
+
+function safeLoadEntries(){try{const r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):[]}catch{localStorage.removeItem(STORAGE_KEY);return[]}}
+
+function saveEntriesToStorage(){localStorage.setItem(STORAGE_KEY,JSON.stringify(entries))}
+
+function updateCount(){entryCountEl.textContent=entries.length}
+
+function createEntryElement(e,i){
+  const wrapper=document.createElement('article');wrapper.className='entry';
+  const body=document.createElement('div');body.className='body';
+  const h4=document.createElement('h4');h4.textContent=e.date;
+  const p=document.createElement('p');p.textContent=e.text;
+  body.appendChild(h4);body.appendChild(p);
+  const actions=document.createElement('div');actions.className='actions';
+  const editBtn=document.createElement('button');editBtn.className='edit';editBtn.textContent='Edit';editBtn.addEventListener('click',()=>openEditModal(i));
+  const deleteBtn=document.createElement('button');deleteBtn.className='delete';deleteBtn.textContent='Delete';deleteBtn.addEventListener('click',()=>deleteEntry(i));
+  actions.appendChild(editBtn);actions.appendChild(deleteBtn);
+  wrapper.appendChild(body);wrapper.appendChild(actions);
+  return wrapper;
+}
+
+function renderEntries(){entriesList.innerHTML='';if(!entries.length){const d=document.createElement('div');d.className='empty';d.textContent='No entries yet.';entriesList.appendChild(d);updateCount();return}
+entries.forEach((e,i)=>{entriesList.appendChild(createEntryElement(e,i))});updateCount()}
+
+function addEntry(t){const entry={id:Date.now(),date:new Date().toLocaleString(),text:t.trim()};entries.unshift(entry);saveEntriesToStorage();renderEntries()}
+
+function deleteEntry(i){if(!confirm('Delete this entry?'))return;entries.splice(i,1);saveEntriesToStorage();renderEntries()}
+
+function openEditModal(i){editIndex=i;modalTextarea.value=entries[i].text;editModal.classList.add('open')}
+function closeEditModal(){editIndex=null;modalTextarea.value='';editModal.classList.remove('open')}
+function saveEdit(){if(editIndex===null)return;const v=modalTextarea.value.trim();if(!v){alert('Entry cannot be empty.');return}entries[editIndex].text=v;entries[editIndex].date=new Date().toLocaleString()+' (edited)';saveEntriesToStorage();closeEditModal();renderEntries()}
+
+function clearAll(){if(!entries.length)return; if(!confirm('Delete ALL entries?'))return;entries=[];saveEntriesToStorage();renderEntries()}
+function saveDraft(){const t=diaryEntry.value.trim();if(!t)return alert('Draft is empty.');localStorage.setItem(DRAFT_KEY,t);alert('Draft saved.')}
+function loadDraft(){const d=localStorage.getItem(DRAFT_KEY);if(!d)return alert('No draft.');diaryEntry.value=d;diaryEntry.focus()}
+function exportEntries(){if(!entries.length)return alert('No entries to export.');const blob=new Blob([JSON.stringify(entries,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`nirvana_diary_${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();a.remove();}
+
+function init(){
+  entries=safeLoadEntries();renderEntries();
+  saveBtn.addEventListener('click',()=>{const t=diaryEntry.value; if(!t||!t.trim()){alert('Write something before saving.');return} addEntry(t); diaryEntry.value=''; localStorage.removeItem(DRAFT_KEY);});
+  saveDraftBtn.addEventListener('click',saveDraft); loadDraftBtn.addEventListener('click',loadDraft);
+  clearAllBtn.addEventListener('click',clearAll); exportBtn.addEventListener('click',exportEntries);
+  modalSaveBtn.addEventListener('click',saveEdit); modalCancelBtn.addEventListener('click',closeEditModal);
+  closeModalBtn.addEventListener('click',closeEditModal);
+  editModal.addEventListener('click',e=>{if(e.target===editModal)closeEditModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&editModal.classList.contains('open'))closeEditModal()});
+}
+init();
+})();
+</script>
+</body>
+</html>

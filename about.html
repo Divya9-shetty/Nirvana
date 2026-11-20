@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirvana — About Us</title>
+<style>
+:root{
+  --bg:#f4f7fb;
+  --card:#fff;
+  --accent:#2563eb;
+  --text:#0f172a;
+  --muted:#6b7280;
+}
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  background:linear-gradient(90deg,#2563eb,#60a5fa);
+  color:white;
+  padding:16px;
+  text-align:center;
+}
+header nav a{
+  color:white;
+  text-decoration:none;
+  margin:0 10px;
+  font-weight:500;
+}
+.wrap{
+  max-width:900px;
+  margin:24px auto;
+  padding:20px;
+  background:var(--card);
+  border-radius:12px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+h1{margin-top:0;font-size:26px}
+h2{margin-top:24px;color:var(--accent)}
+p{line-height:1.6;margin-bottom:16px}
+.team{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  margin-top:24px;
+}
+.member{
+  background:#fefefe;
+  border-radius:10px;
+  padding:16px;
+  flex:1 1 200px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.05);
+  text-align:center;
+}
+.member img{
+  width:100px;
+  height:100px;
+  object-fit:cover;
+  border-radius:50%;
+  margin-bottom:10px;
+}
+footer{
+  text-align:center;
+  padding:14px;
+  font-size:13px;
+  color:var(--muted);
+  margin-top:20px;
+}
+@media(max-width:600px){
+  .team{flex-direction:column;align-items:center;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Nirvana</h1>
+  <nav>
+    <a href="dashboard.html">🏠 Dashboard</a>|
+    <a href="chatbot.html">💬 Chatbot</a>|
+    <a href="assessment.html">🧠 Self Assessment</a>|
+    <a href="diary.html">📓 Diary</a>
+  </nav>
+</header>
+
+<div class="wrap">
+  <h2>About Nirvana</h2>
+  <p>Nirvana is a mental health support platform designed to help users monitor and improve their mental well-being. It provides tools such as self-assessment questionnaires, a personal diary, and a chatbot to provide guidance, coping strategies, and resources for conditions like anxiety, PTSD, ADHD, depression, bipolar disorder, and schizophrenia spectrum disorder.</p>
+
+  <h2>Our Mission</h2>
+  <p>Our mission is to make mental health support accessible, intuitive, and personalized. Nirvana encourages self-awareness, reflection, and proactive mental wellness through simple, user-friendly tools.</p>
+
+  <h2>Our Team</h2>
+  <div class="team">
+    <div class="member">
+      <img src="https://via.placeholder.com/100" alt="Rahul Shetty">
+      <h3>Rahul Shetty</h3>
+      <p>Founder & Developer</p>
+    </div>
+    <div class="member">
+      <img src="https://via.placeholder.com/100" alt="Team Member 2">
+      <h3>Team Member 2</h3>
+      <p>UI/UX Designer</p>
+    </div>
+    <div class="member">
+      <img src="https://via.placeholder.com/100" alt="Team Member 3">
+      <h3>Team Member 3</h3>
+      <p>Content & Research</p>
+    </div>
+    <div class="member">
+      <img src="https://via.placeholder.com/100" alt="Team Member 4">
+      <h3>Team Member 4</h3>
+      <p>QA & Support</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Nirvana. All rights reserved.
+</footer>
+
+</body>
+</html>
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Nirvana</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+    body, html { height: 100%; }
+
+    /* Background with abstract mental health theme */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    /* Form container */
+    .container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-20px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+
+    h2 { text-align: center; color: #333; margin-bottom: 25px; font-weight: 500; }
+
+    label { display: block; margin-bottom: 6px; font-size: 14px; color: #555; }
+
+    input {
+      width: 100%; padding: 12px 15px; margin-bottom: 20px;
+      border-radius: 12px; border: 1px solid #ccc; font-size: 14px;
+      outline: none; transition: all 0.3s ease;
+      background: #f7f7f7;
+      box-shadow: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff;
+    }
+    input:focus {
+      border-color: #4a90e2;
+      box-shadow: 0 0 8px rgba(74,144,226,0.6);
+      background: #fff;
+    }
+
+    button {
+      width: 100%; padding: 14px; border-radius: 12px; border: none;
+      background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+      color: white; font-size: 16px; font-weight: 500;
+      cursor: pointer; transition: all 0.3s ease;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px rgba(0,0,0,0.25);
+    }
+
+    .links { text-align: center; margin-top: 15px; font-size: 14px; color: #444; }
+    .links a { color: #2575fc; text-decoration: none; transition: all 0.3s; }
+    .links a:hover { text-decoration: underline; }
+
+    input:focus, button:focus { outline: 3px solid rgba(74,144,226,0.5); }
+
+    @media (max-width: 500px) { .container { padding: 30px 20px; border-radius: 10px; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm" aria-label="Login Form">
+      <label for="username">Username</label>
+      <input type="text" id="username" aria-required="true" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" aria-required="true" required>
+
+      <button type="submit">Login</button>
+
+      <div class="links">
+        <a href="forgotpass.html">Forgot Password?</a><br>
+        Don’t have an account? <a href="create.html">Create one</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const userData = localStorage.getItem(username);
+
+      if(!userData){
+        alert('User not found.');
+        return;
+      }
+      const user = JSON.parse(userData);
+      if(user.password === password){
+        alert('Login successful! Welcome, ' + username + '!');
+        window.location.href = 'dashboard.html';
+      } else {
+        alert('Invalid password.');
+      }
+    });
+  </script>
+</body>
+</html>

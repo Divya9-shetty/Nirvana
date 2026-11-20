@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nirvana Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    background: #f7f7f7;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 32px;
+    font-weight: 600;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  /* Hamburger Menu */
+  .menu-toggle {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    cursor: pointer;
+    width: 30px;
+    height: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .menu-toggle span {
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: #333;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100%;
+    width: 250px;
+    background: #fff;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    padding-top: 80px;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.active { left: 0; }
+
+  .sidebar a {
+    display: block;
+    padding: 15px 25px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+    transition: 0.2s;
+  }
+
+  .sidebar a:hover {
+    background: #f0f0f0;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+  }
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .modules {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  }
+
+  .card-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+  }
+
+  .card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 18px;
+  }
+
+  .card button {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    background: #333;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .card button:hover {
+    background: #555;
+  }
+
+  footer {
+    text-align: center;
+    padding: 15px 0;
+    color: #777;
+    font-size: 14px;
+    background: #fff;
+    box-shadow: 0 -1px 5px rgba(0,0,0,0.05);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  Nirvana 🌿
+</header>
+
+<div class="sidebar" id="sidebar">
+  <a href="profile.html">Profile</a>
+  <a href="login.html">Log In</a>
+  <a href="create.html">Create Account</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact Us</a>
+</div>
+
+<main>
+  <h2>Welcome</h2>
+  <div class="modules">
+    <div class="card" onclick="openModule('chatbot')">
+      <div class="card-icon">🤖</div>
+      <h3>Chatbot</h3>
+      <p>Talk with AI chatbot anytime</p>
+      <button>Open</button>
+    </div>
+
+    <div class="card" onclick="openModule('phobia')">
+      <div class="card-icon">🔍</div>
+      <h3>Phobia Lens</h3>
+      <p>Learn about phobias and coping strategies</p>
+      <button>Open</button>
+    </div>
+
+    <div class="card" onclick="openModule('questionnaire')">
+      <div class="card-icon">📝</div>
+      <h3>Questionnaire</h3>
+      <p>Answer questions & get personalized feedback</p>
+      <button>Open</button>
+    </div>
+
+    <div class="card" onclick="openModule('diary')">
+      <div class="card-icon">📔</div>
+      <h3>Diary</h3>
+      <p>Write your thoughts & feelings privately</p>
+      <button>Open</button>
+    </div>
+  </div>
+</main>
+
+<footer>© 2025 Nirvana - Mental Health System</footer>
+
+<script>
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('active');
+}
+
+function openModule(module){
+  if(module==='chatbot') window.location.href='chatbot.html';
+  else if(module==='phobia') window.location.href='phobia.html';
+  else if(module==='questionnaire') window.location.href='questionnaire.html';
+  else if(module==='diary') window.location.href='diary.html';
+}
+</script>
+
+</body>
+</html>
+
+

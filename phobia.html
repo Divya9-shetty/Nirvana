@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phobia Explainer - AI-Powered</title>
+    <link rel="stylesheet" href="phobia.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Phobia Explainer</h1>
+            <p>AI-powered detailed analysis of fears and phobias</p>
+        </div>
+
+        <div class="content">
+            <div class="search-section">
+                <div class="input-group">
+                    <label for="fearInput">What fear would you like to understand?</label>
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="fearInput" 
+                            placeholder="Enter a fear (e.g., heights, spiders, flying, fire)"
+                            autocomplete="off"
+                        >
+                        <button class="search-btn" id="searchBtn">Analyze</button>
+                    </div>
+                    <div class="examples">
+                        <strong>Examples:</strong>
+                        <span data-fear="heights">Heights</span>
+                        <span data-fear="spiders">Spiders</span>
+                        <span data-fear="fire">Fire</span>
+                        <span data-fear="flying">Flying</span>
+                        <span data-fear="public speaking">Public Speaking</span>
+                        <span data-fear="darkness">Darkness</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Analyzing fear and gathering information...</p>
+            </div>
+
+            <div class="error" id="error"></div>
+
+            <div class="results" id="results"></div>
+
+            <div class="info-box">
+                <strong>Note:</strong> This tool provides educational information about phobias. If you're experiencing severe anxiety or phobias that significantly impact your life, please consult with a mental health professional.
+            </div>
+        </div>
+    </div>
+    <script src="phobia.js"></script>
+</body>
+</html>
